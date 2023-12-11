@@ -9,6 +9,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['title', 'slug', 'description', 'active']
 
     def create(self, validated_data):
-        # Gerar slug automaticamente a partir do title, se não for fornecido
+        """Criando um slug automaticamente a partir do título da categoria"""
         validated_data['slug'] = validated_data.get('slug') or slugify(validated_data['title'])
         return super().create(validated_data)
