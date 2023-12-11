@@ -10,9 +10,13 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = User
+        skip_postgeneration_save = True
 
 class OrderFactory(factory.django.DjangoModelFactory):
-    user = factory.LazyAttribute(UserFactory)
+    user = factory.SubFactory(UserFactory)
+    class Meta:
+        model = Order
+        skip_postgeneration_save = True
     
     @factory.post_generation
     def products(self, create, extracted, **kwargs):
@@ -20,8 +24,5 @@ class OrderFactory(factory.django.DjangoModelFactory):
             return
 
         if extracted:
-            for product in extracted:
-                self.products.add(product)
-
-    class Meta:
-        model = Order
+            for produto in extracted:
+                self.products.add(produto)
