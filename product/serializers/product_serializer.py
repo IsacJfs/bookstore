@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'description', 'price', 'active', 'category', 'categories_id']
 
     def create(self, validated_data):
-        print(validated_data)
+        # print(validated_data)
         categories_ids = validated_data.pop('category')
 
         product = Product.objects.create(**validated_data)

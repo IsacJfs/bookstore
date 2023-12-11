@@ -1,7 +1,6 @@
 import json
 
 from django.urls import reverse
-from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient, APITestCase
 from rest_framework.views import status
 
@@ -42,7 +41,7 @@ class TestProductViewSet(APITestCase):
             data=data,
             content_type="application/json",
         )
-        print(response)
+        # print(response)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
