@@ -27,7 +27,7 @@ class TestOrderViewSet(APITestCase):
 
         order_data = json.loads(response.content)
         print(order_data)
-        first_order = order_data[0]
+        first_order = order_data["results"][0]
         self.assertEqual(
             first_order["product"][0]["title"], self.product.title
         )
