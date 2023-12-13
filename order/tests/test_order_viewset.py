@@ -16,17 +16,17 @@ class TestOrderViewSet(APITestCase):
         self.client = APIClient()
         self.category = CategoryFactory(title="technology")
         self.product = ProductFactory(title="mouse", price=100)
-        self.product.category.add(self.category)
+        self.product.category.add(self.category) # type: ignore
         self.user = UserFactory()
         self.order = OrderFactory(user=self.user)
-        self.order.product.add(self.product)
+        self.order.product.add(self.product) # type: ignore
         token = Token.objects.create(user=self.user)
         token.save()
 
     def test_order(self):
         token = Token.objects.get(user__username=self.user.username)
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-        response = self.client.get(reverse("order-list", kwargs={"version": "v1"}))
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key) # type: ignore
+        response = self.client.get(reverse("order-list", kwargs={"version": "v1"})) # type: ignore
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -35,7 +35,7 @@ class TestOrderViewSet(APITestCase):
         first_order = order_data["results"][0]
         self.assertEqual(first_order["product"][0]["title"], self.product.title)
         self.assertEqual(first_order["product"][0]["price"], self.product.price)
-        self.assertEqual(first_order["product"][0]["active"], self.product.active)
+        self.assertEqual(first_order["product"][0]["active"], self.product.active) # type: ignore
         self.assertEqual(
             first_order["product"][0]["category"][0]["title"],
             self.category.title,
@@ -43,10 +43,10 @@ class TestOrderViewSet(APITestCase):
 
     def test_create_order(self):
         token = Token.objects.get(user__username=self.user.username)
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key) # type: ignore
         user = UserFactory()
         product = ProductFactory()
-        data = json.dumps({"user": user.id, "products_id": [product.id]})
+        data = json.dumps({"user": user.id, "products_id": [product.id]}) # type: ignore
         # print(data)
         response = self.client.post(
             reverse("order-list", kwargs={"version": "v1"}),
@@ -57,4 +57,4 @@ class TestOrderViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         created_order = Order.objects.get(user=user)
-        created_order.product.add(product.id)
+        created_order.product.add(product.id) # type: ignore
