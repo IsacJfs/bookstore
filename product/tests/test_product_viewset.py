@@ -27,7 +27,7 @@ class TestProductViewSet(APITestCase):
 
         self.assertEqual(product_data["results"][0]["title"], self.product.title)
         self.assertEqual(product_data["results"][0]["price"], self.product.price)
-        self.assertEqual(product_data["results"][0]["active"], self.product.active)
+        self.assertEqual(product_data["results"][0]["active"], self.product.active) # type: ignore
 
     def test_create_product(self):
         category = CategoryFactory()
@@ -36,7 +36,7 @@ class TestProductViewSet(APITestCase):
         )
 
         response = self.client.post(
-            reverse("product-list", kwargs={"version": "v1"}),
+            reverse("product-list", kwargs={"version": "v1"}), # type: ignore
             data=data,
             content_type="application/json",
         )
