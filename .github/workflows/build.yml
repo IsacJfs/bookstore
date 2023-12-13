@@ -27,4 +27,4 @@ jobs:
               poetry add flake8
 
           - name: Test 
-            run: poetry run python manage.py test
+            run: poetry run pytest
