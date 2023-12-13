@@ -17,8 +17,8 @@ jobs:
                 python-version: ${{ matrix.python-version }}
           - name: Install Poetry
             run: |
-              curl -sSL https://install.python-poetry.org | python3 -
-              source $HOME/.poetry/env
+              python -m pip install --upgrade pip
+              pip install poetry
           - name: Install dependencies
             shell: bash
             run: python -m poetry install
