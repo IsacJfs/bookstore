@@ -9,7 +9,6 @@ from product.models import Category
 
 
 class CategoryViewSet(APITestCase):
-
     def setUp(self):
         self.client = APIClient()
         self.category = CategoryFactory(title="books")
