@@ -13,7 +13,7 @@ ENV PYTHONUNBUFFERED=1 \
     \
     # poetry
     # https://python-poetry.org/docs/configuration/#using-environment-variables
-    POETRY_VERSION=1.7.7 \
+    POETRY_VERSION=1.7.1 \
     # make poetry install to this location
     POETRY_HOME="/opt/poetry" \
     # make poetry create the virtual environment in the project's root
@@ -39,12 +39,12 @@ RUN apt-get update \
         build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN pip install poetry
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # install postgres dependencies inside of Docker
 RUN apt-get update \
-    && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2
+    && apt-get -y install libpq-dev gcc
+    # && pip install psycopg2
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
@@ -54,7 +54,7 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-dev
 
 # quicker install as runtime deps are already installed
-RUN poetry install
+RUN poetry install 
 
 WORKDIR /app
 

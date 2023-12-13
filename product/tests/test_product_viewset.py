@@ -10,7 +10,6 @@ from product.models import Product
 
 
 class TestProductViewSet(APITestCase):
-
     def setUp(self):
         self.client = APIClient()
         self.user = UserFactory()
